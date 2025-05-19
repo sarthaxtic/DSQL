@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EDSQL Query Runner</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">EDSQL Runner</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -48,13 +50,9 @@
                 </form>
             </div>
         </div>
-        
-        <div id="result-container" class="mt-4 d-none">
-           <!-- Result containers -->
-<div id="resultText" class="result-section"></div>
-<div id="resultTable" class="result-section" style="display:none;"></div>
-<div id="resultPlot" class="result-section" style="display:none;"></div>
 
+        <!-- Single result container -->
+        <div id="result-container" class="mt-4 d-none">
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white">
                     <h5><i class="fas fa-chart-bar"></i> Query Result</h5>
@@ -66,19 +64,24 @@
                         </div>
                         <p class="mt-2">Processing your query...</p>
                     </div>
+
                     <pre id="query-result" class="text-monospace d-none"></pre>
+
                     <div id="query-table" class="table-responsive d-none">
                         <table class="table table-bordered table-hover">
                             <thead id="query-table-head"></thead>
                             <tbody id="query-table-body"></tbody>
                         </table>
                     </div>
+
+                    <div id="query-plot" class="mt-3 d-none"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
