@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDSQL Query Runner</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">EDSQL Runner</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto nav-pills" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="pill" data-bs-target="#home" 
+                type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="documentation-tab" data-bs-toggle="pill" data-bs-target="#documentation" 
+                type="button" role="tab" aria-controls="documentation" aria-selected="false">Documentation</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="pill" data-bs-target="#contact" 
+                type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="tab-content" id="myTabContent">
+
+      <!-- Updated Home Tab -->
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <h3>Welcome to the EDSQL Compiler</h3>
+            <p>The EDSQL Compiler is a Domain-Specific Query Language (DSQL) tool created for Educational Data Analysis. It allows educators, analysts, and administrators to analyze student performance data with simplicity and efficiency.</p>
+            <h4>Key Features:</h4>
+            <ul>
+              <li>Querying data on student grades, attendance, and extracurricular activities.</li>
+              <li>Custom performance score calculations using weighted formulas.</li>
+              <li>Grouping and aggregation with functions like AVG(), COUNT(), MAX(), and MIN().</li>
+              <li>Data filtering and conditional queries for insightful analysis.</li>
+              <li>Integrated data visualization with bar, line, pie charts, and heatmaps.</li>
+            </ul>
+            <h4>Why EDSQL?</h4>
+            <ul>
+              <li>Lightweight and user-friendly query syntax tailored for educational needs.</li>
+              <li>Direct visualization within queries without external tools.</li>
+              <li>Customizable abstractions for specific educational requirements.</li>
+              <li>Future-ready with potential for NLP-powered query handling.</li>
+            </ul>
+            <p><strong>EDSQL simplifies the complexity of traditional SQL and empowers users to gain actionable insights with minimal effort!</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documentation Tab -->
+      <div class="tab-pane fade" id="documentation" role="tabpanel" aria-labelledby="documentation-tab">
+        <div class="text-center mb-4">
+          <h1 class="text-primary"><i class="fas fa-book"></i> Documentation</h1>
+          <p class="text-muted">Learn how to use the EDSQL Query Runner effectively.</p>
+        </div>
+        <div class="card shadow-lg p-4">
+          <h3>Getting Started</h3>
+          <p>Welcome to the EDSQL Query Runner documentation. Here you will find all the details you need to write and run your EDSQL queries.</p>
+
+          <h4>Writing Queries</h4>
+          <p>EDSQL supports SQL-like syntax with extensions to simplify complex data manipulation tasks.</p>
+
+          <ul>
+            <li><strong>SELECT</strong>: Use to fetch data.</li>
+            <li><strong>WHERE</strong>: Filter data.</li>
+            <li><strong>JOIN</strong>: Combine tables.</li>
+            <li><strong>GROUP BY</strong>: Aggregate data.</li>
+          </ul>
+
+          <h4>Example Query</h4>
+          <pre class="bg-light p-3 rounded">SELECT * FROM users WHERE age &gt; 30;</pre>
+
+          <h4>Advanced Features</h4>
+          <p>Stay tuned for more advanced query capabilities like subqueries, window functions, and custom functions.</p>
+        </div>
+      </div>
+
+      <!-- Contact Tab -->
+      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="card shadow-lg p-4">
+          <h3>Contact Team</h3>
+          <div class="row">
+            <!-- Sarthak's Details -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h5 class="card-title">Sarthak</h5>
+                  <p class="card-text">
+                    <strong>Role:</strong> Project Manager <br>
+                    <strong>Email:</strong> <a href="mailto:sarthak@example.com">sarthak@example.com</a> <br>
+                    <strong>Phone:</strong> +91-9876543210
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Falguni's Details -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h5 class="card-title">Falguni</h5>
+                  <p class="card-text">
+                    <strong>Role:</strong> Backend Developer <br>
+                    <strong>Email:</strong> <a href="mailto:falguni@example.com">falguni@example.com</a> <br>
+                    <strong>Phone:</strong> +91-9876543211
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Babita's Details -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h5 class="card-title">Babita</h5>
+                  <p class="card-text">
+                    <strong>Role:</strong> UI/UX Designer <br>
+                    <strong>Email:</strong> <a href="mailto:babita@example.com">babita@example.com</a> <br>
+                    <strong>Phone:</strong> +91-9876543212
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kanika's Details -->
+            <div class="col-md-6 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h5 class="card-title">Kanika</h5>
+                  <p class="card-text">
+                    <strong>Role:</strong> Frontend Developer <br>
+                    <strong>Email:</strong> <a href="mailto:tkanika551@gmail.com">tkanika551@gmail.com</a> <br>
+                    <strong>Phone:</strong> +91-9876543213
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
