@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const queryTable = document.getElementById('query-table');
     const tableHead = document.getElementById('query-table-head');
     const tableBody = document.getElementById('query-table-body');
+    const queryPlot = document.getElementById('query-plot'); // For plot image
 
     queryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -14,8 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear previous results
         queryResult.classList.add('d-none');
         queryTable.classList.add('d-none');
+        queryPlot.classList.add('d-none');
         tableHead.innerHTML = '';
         tableBody.innerHTML = '';
+        queryPlot.innerHTML = '';
 
         // Show loading spinner
         loadingSpinner.classList.remove('d-none');
@@ -24,8 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const query = queryInput.value.trim();
 
         try {
-            // Send query to Flask backend
-            const response = await fetch('http://127.0.0.1:5000/execute_query', {
+            const response = await fetch('http://127.0.0.1:5000/query', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,19 +35,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ query }),
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
             const data = await response.json();
 
-            if (data.type === 'text') {
-                queryResult.textContent = data.data;
-                queryResult.classList.remove('d-none');
-            } else if (data.type === 'table') {
-                renderTable(data.data);
+            if (!response.ok) {
+                throw new Error(data.error || 'Query failed');
+            }
+
+            // Show table if result exists
+            if (data.result && data.result.length > 0) {
+                const headers = Object.keys(data.result[0]);
+                const rows = data.result.map(row => headers.map(h => row[h]));
+                renderTable(headers, rows);
                 queryTable.classList.remove('d-none');
             }
+
+            // Show plot if exists
+            if (data.plot) {
+                const img = document.createElement('img');
+                img.src = `data:image/png;base64,${data.plot}`;
+                img.alt = 'Query Plot';
+                img.className = 'img-fluid';
+                queryPlot.appendChild(img);
+                queryPlot.classList.remove('d-none');
+            }
+
+            if ((!data.result || data.result.length === 0) && !data.plot) {
+                queryResult.textContent = 'No results returned.';
+                queryResult.classList.remove('d-none');
+            }
+
         } catch (error) {
             queryResult.textContent = `Error: ${error.message}`;
             queryResult.classList.remove('d-none');
@@ -54,10 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function renderTable(data) {
-        const { headers, rows } = data;
-
-        // Render table headers
+    function renderTable(headers, rows) {
         const headerRow = document.createElement('tr');
         headers.forEach(header => {
             const th = document.createElement('th');
@@ -66,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         tableHead.appendChild(headerRow);
 
-        // Render table rows
         rows.forEach(row => {
             const tr = document.createElement('tr');
             row.forEach(cell => {
