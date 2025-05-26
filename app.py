@@ -66,6 +66,9 @@ def index():
         if query:  # Ensure the query is not empty
             if "select" not in query.lower():
                 sql_query = convert_entities_to_edsql(query)  # Convert NLP to SQL
+                if not sql_query:  # If conversion fails
+                    output = "Sorry, couldn't understand the NLP."
+                    return render_template("index.html", query=query, sql_query=sql_query, output=output, graph=graph)
             else:
                 sql_query = query
 
@@ -90,7 +93,6 @@ def index():
                             data = result[result.columns[0]].value_counts()
                         data.plot(kind="pie", ax=ax, autopct='%1.1f%%')
                         ax.set_ylabel("")
-
 
                     # Convert plot to base64
                     buf = io.BytesIO()
