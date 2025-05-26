@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # ------------------ Lexical Analysis ------------------
 tokens = (
     'SELECT', 'FROM', 'WHERE', 'PLOT', 'BAR', 'GRAPH', 'LINE', 'PIE', 'CHART',
-    'IDENTIFIER', 'NUMBER', 'STRING', 'COMMA', 'GREATER_THAN', 'EQUALS', 'SEMICOLON',
+    'IDENTIFIER', 'NUMBER', 'STRING', 'COMMA', 'GREATER_THAN', 'LESS_THAN', 'EQUALS','ASTERISK', 'SEMICOLON',
     'LPAREN', 'RPAREN', 'AVG', 'GROUP', 'BY', 'ORDER', 'LIMIT', 'ASC', 'DESC',
     'CUSTOM_METRIC'
 )
@@ -39,7 +39,9 @@ t_DESC = r'DESC'
 t_CUSTOM_METRIC = r'CUSTOM_METRIC'
 t_COMMA = r','
 t_GREATER_THAN = r'>'
+t_LESS_THAN = r'<'
 t_EQUALS = r'='
+t_ASTERISK = r'\*'
 t_SEMICOLON = r';'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -73,12 +75,16 @@ def p_query(p):
     p[0] = ('QUERY', p[2], p[4], p[5], p[6], p[7], p[8], p[9], p[10])
 
 def p_select_list(p):
-    '''select_list : expression COMMA select_list
+    '''select_list : ASTERISK
+                   | expression COMMA select_list
                    | expression'''
-    if len(p) == 4:
+    if p[1] == '*':
+        p[0] = ['*']
+    elif len(p) == 4:
         p[0] = [p[1]] + p[3]
     else:
         p[0] = [p[1]]
+
 
 def p_expression(p):
     '''expression : IDENTIFIER
@@ -115,8 +121,10 @@ def p_where_clause(p):
 
 def p_condition(p):
     '''condition : IDENTIFIER GREATER_THAN NUMBER
+                 | IDENTIFIER LESS_THAN NUMBER
                  | IDENTIFIER EQUALS STRING'''
     p[0] = ('CONDITION', p[1], p[2], p[3])
+
 
 def p_group_by_clause(p):
     '''group_by_clause : GROUP BY IDENTIFIER
