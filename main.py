@@ -6,9 +6,47 @@ from intent_classifier import classify_intent
 from matcher_utils import extract_entities
 from convert_to_edsql import convert_entities_to_edsql
 
+
 # Load NLP model and dataset
 nlp = spacy.load("en_core_web_sm")
 df = pd.read_csv("students.csv")
+
+import google.generativeai as genai
+
+# Setup Gemini with your API key
+genai.configure(api_key="AIzaSyC_i39OYSR86yUNuGq3WxebgRiMad5vXw0")
+
+model = genai.GenerativeModel("gemini-2.0-flash")
+
+def ask_gemini(nl_query):
+    prompt = f"""
+You are an expert in converting natural language to a custom SQL-like language called EDSQL.
+EDSQL has these rules:
+
+- SELECT ... FROM students;
+- SELECT name, grades FROM students WHERE grades > 80;
+- SELECT AVG(grades) FROM students GROUP BY class;
+- SELECT name, grades FROM students ORDER BY grades DESC LIMIT 5;
+- SELECT class FROM students PLOT PIE CHART;
+- SELECT name, grades FROM students PLOT BAR GRAPH;
+- SELECT PERFORMANCE_SCORE(grades, attendance) FROM students;
+
+Now convert the following natural language query to EDSQL:
+
+"{nl_query}"
+
+Only return the EDSQL code. No explanation.
+Only return valid EDSQL syntax without using '*'. List all columns explicitly. No explanation.
+
+"""
+
+    try:
+        response = model.generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        print("Gemini fallback failed:", e)
+        return None
+
 
 def compute_custom_metric(df, metric_name):
     if metric_name == 'PERFORMANCE_SCORE':
@@ -36,7 +74,7 @@ def convert_to_edsql(nl_query):
     elif intent == "conditional_query":
         return 'SELECT name, grades FROM students WHERE grades > 80;'
     else:
-        return None
+        return ask_gemini(nl_query)
 
 def execute_query(parsed_query):
     _, select_list, table, where_clause, group_by_clause, plot_clause, order_clause, limit_clause, _ = parsed_query
@@ -126,7 +164,7 @@ def execute_query(parsed_query):
 def main():
     user_input = input("Enter EDSQL or NL query:\n")
     if "select" not in user_input.lower():
-        user_input = convert_entities_to_edsql(user_input)
+        user_input = convert_to_edsql(user_input)
         if not user_input:
             print("Sorry, couldn't understand your natural language query.")
             return
