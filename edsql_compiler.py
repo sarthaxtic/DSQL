@@ -170,4 +170,3 @@ def p_error(p):
         print("Syntax error at EOF")
 
 parser = yacc.yacc()
-
