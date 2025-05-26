@@ -6,7 +6,6 @@ from intent_classifier import classify_intent
 from matcher_utils import extract_entities
 from convert_to_edsql import convert_entities_to_edsql
 
-
 # Load NLP model and dataset
 nlp = spacy.load("en_core_web_sm")
 df = pd.read_csv("students.csv")
@@ -14,7 +13,7 @@ df = pd.read_csv("students.csv")
 import google.generativeai as genai
 
 # Setup Gemini with your API key
-genai.configure(api_key="AIzaSyC_i39OYSR86yUNuGq3WxebgRiMad5vXw0")
+genai.configure(api_key="API_KEY")
 
 model = genai.GenerativeModel("gemini-2.0-flash")
 
